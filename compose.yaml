@@ -30,8 +30,38 @@ services:
     depends_on:
       - mariadb
 
+  snipeit:
+    image: snipe/snipe-it:${APP_VERSION:-v7.0.11}
+    restart: unless-stopped
+    volumes:
+      - snipeit_data:/var/lib/snipeit
+    ports:
+      - "81:80"
+    depends_on:
+      snipeit-db:
+        condition: service_healthy
+
+  snipeit-db:
+    image: mariadb:11.5.2
+    restart: unless-stopped
+    volumes:
+      - snipeit_data:/var/lib/mysql # Using db_data for persistent storage of database files
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 1s
+      retries: 5
+
 volumes:
   mariadb_data:
     driver: local
   suitecrm_data:
     driver: local
+  snipeit_data:
+    driver: local # Defined here for persistence of snipeit-db data
