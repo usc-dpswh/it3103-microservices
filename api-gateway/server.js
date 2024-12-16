@@ -37,14 +37,14 @@ app.post("/oauth2/suitecrm", async (req, res) => {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded", // Set content type
         },
-      }
+      },
     );
 
     res.json(response.data); // Send the response data back to the client
   } catch (error) {
     console.error(
       "Error fetching data:",
-      error.response ? error.response.data : error.message
+      error.response ? error.response.data : error.message,
     );
     res.status(500).send("Error fetching data");
   }
