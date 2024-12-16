@@ -1,67 +1,114 @@
-# Copyright Broadcom, Inc. All Rights Reserved.
-# SPDX-License-Identifier: APACHE-2.0
+version: "3.8" # Specify the version of Docker Compose
 
 services:
   mariadb:
     image: docker.io/bitnami/mariadb:latest
     environment:
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=yes
-      - MARIADB_USER=bn_suitecrm
-      - MARIADB_DATABASE=bitnami_suitecrm
-      - MARIADB_PASSWORD=bitnami123
+      ALLOW_EMPTY_PASSWORD: yes
+      MARIADB_USER: bn_suitecrm
+      MARIADB_DATABASE: bitnami_suitecrm
+      MARIADB_PASSWORD: bitnami123
     volumes:
       - "mariadb_data:/bitnami/mariadb"
+    networks:
+      - suitecrm_network # Assign to mariadb network
+
   suitecrm:
     image: docker.io/bitnami/suitecrm:8
     ports:
       - "80:8080"
       - "443:8443"
     environment:
-      - SUITECRM_DATABASE_HOST=mariadb
-      - SUITECRM_DATABASE_PORT_NUMBER=3306
-      - SUITECRM_DATABASE_USER=bn_suitecrm
-      - SUITECRM_DATABASE_NAME=bitnami_suitecrm
-      - SUITECRM_DATABASE_PASSWORD=bitnami123
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=yes
+      SUITECRM_DATABASE_HOST: mariadb
+      SUITECRM_DATABASE_PORT_NUMBER: 3306
+      SUITECRM_DATABASE_USER: bn_suitecrm
+      SUITECRM_DATABASE_NAME: bitnami_suitecrm
+      SUITECRM_DATABASE_PASSWORD: bitnami123
+      ALLOW_EMPTY_PASSWORD: yes
     volumes:
       - "suitecrm_data:/bitnami/suitecrm"
     depends_on:
       - mariadb
+    networks:
+      - suitecrm_network # Assign to mariadb network
 
   snipeit:
-    image: snipe/snipe-it:${APP_VERSION:-v7.0.11}
+    image: snipe/snipe-it:${SNIPEIT_APP_VERSION:-v7.0.11}
     restart: unless-stopped
     volumes:
-      - snipeit_data:/var/lib/snipeit
+      - snipeit_data:/var/lib/snipeit # Using snipeit_data for persistent storage of Snipe-IT application data
     ports:
-      - "81:80"
+      - "${SNIPEIT_APP_PORT:-8001}:80"
     depends_on:
       snipeit-db:
         condition: service_healthy
+    networks:
+      - snipeit_network # Assign to snipeit network
+    environment:
+      # APP SETTINGS
+      APP_ENV: ${SNIPEIT_APP_ENV}
+      APP_DEBUG: ${SNIPEIT_APP_DEBUG}
+      APP_KEY: ${SNIPEIT_APP_KEY}
+      APP_URL: ${SNIPEIT_APP_URL}
+      APP_TIMEZONE: ${SNIPEIT_APP_TIMEZONE}
+      APP_LOCALE: ${SNIPEIT_APP_LOCALE}
+      MAX_RESULTS: ${SNIPEIT_MAX_RESULTS}
+
+      # DB SETTINGS
+      DB_CONNECTION: ${SNIPEIT_DB_CONNECTION}
+      DB_HOST: ${SNIPEIT_DB_HOST}
+      DB_PORT: ${SNIPEIT_DB_PORT}
+      DB_DATABASE: ${SNIPEIT_DB_DATABASE}
+      DB_USERNAME: ${SNIPEIT_DB_USERNAME}
+      DB_PASSWORD: ${SNIPEIT_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${SNIPEIT_MYSQL_ROOT_PASSWORD}
+      DB_PREFIX: ${SNIPEIT_DB_PREFIX}
+      DB_DUMP_PATH: ${SNIPEIT_DB_DUMP_PATH}
+      DB_CHARSET: ${SNIPEIT_DB_CHARSET}
+      DB_COLLATION: ${SNIPEIT_DB_COLLATION}
+
+      # MAIL SETTINGS
+      MAIL_MAILER: ${SNIPEIT_MAIL_MAILER}
+      MAIL_HOST: ${SNIPEIT_MAIL_HOST}
+      MAIL_PORT: ${SNIPEIT_MAIL_PORT}
+      MAIL_USERNAME: ${SNIPEIT_MAIL_USERNAME}
+      MAIL_PASSWORD: ${SNIPEIT_MAIL_PASSWORD}
+      MAIL_TLS_VERIFY_PEER: ${SNIPEIT_MAIL_TLS_VERIFY_PEER}
+      MAIL_FROM_ADDR: ${SNIPEIT_MAIL_FROM_ADDR}
+      MAIL_FROM_NAME: ${SNIPEIT_MAIL_FROM_NAME}
+      MAIL_REPLYTO_ADDR: ${SNIPEIT_MAIL_REPLYTO_ADDR}
+      MAIL_REPLYTO_NAME: ${SNIPEIT_MAIL_REPLYTO_NAME}
+      MAIL_AUTO_EMBED_METHOD: ${SNIPEIT_MAIL_AUTO_EMBED_METHOD}
+
+      # DATA PROTECTION SETTINGS
+      ALLOW_BACKUP_DELETE: ${SNIPEIT_ALLOW_BACKUP_DELETE}
+      ALLOW_DATA_PURGE: ${SNIPEIT_ALLOW_DATA_PURGE}
 
   snipeit-db:
     image: mariadb:11.5.2
     restart: unless-stopped
     volumes:
-      - snipeit_data:/var/lib/mysql # Using db_data for persistent storage of database files
+      - snipeit_data:/var/lib/mysql # Using snipeit_data for persistent storage of database files
     environment:
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USERNAME}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${SNIPEIT_DB_DATABASE}
+      MYSQL_USER: ${SNIPEIT_DB_USERNAME}
+      MYSQL_PASSWORD: ${SNIPEIT_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${SNIPEIT_MYSQL_ROOT_PASSWORD}
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s
       timeout: 1s
       retries: 5
+    networks:
+      - snipeit_network # Assign to snipeit network
+
+# Define networks at the bottom of the file
+networks:
+  suitecrm_network:
+  snipeit_network:
 
 volumes:
   mariadb_data:
-    driver: local
   suitecrm_data:
-    driver: local
   snipeit_data:
-    driver: local # Defined here for persistence of snipeit-db data
