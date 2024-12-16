@@ -163,7 +163,8 @@ Keep the `Client ID` in mind as we will use this in the next step.
 
 ![alt text](public/suitecrm/image-15.png)
 
-> **DISCLAIMER:** I am using Bruno, a Git-integrated, fully offline, and open-source API client, so the User Interface (UI) might look a bit different for you. However, the flow should more or less be the same if you're using something like Postman. For more information about Bruno, click [here](https://www.usebruno.com/).
+> [!NOTE]
+> I am using Bruno, a Git-integrated, fully offline, and open-source API client, so the User Interface (UI) might look a bit different for you. However, the flow should more or less be the same if you're using something like Postman. For more information about Bruno, click [here](https://www.usebruno.com/).
 
 1. Configure to use OAuth 2.0
 2. Select Grant Type `Client Credentials`
@@ -182,7 +183,8 @@ Keep the `Client ID` in mind as we will use this in the next step.
 4. Enter your newly created `Access Token` from the [previous request](public/suitecrm/image-15.png).
 5. Click send. You will receive the whole list of configurable API endpoints from SuiteCRM.
 
-> **TIP:** In order to easily view the API documentation, you can choose to save the outputted JSON and open it in your browser so you have more space to view all the listed API endpoints.
+> [!TIP]
+> In order to easily view the API documentation, you can choose to save the outputted JSON and open it in your browser so you have more space to view all the listed API endpoints.
 
 Congratulations! You're now ready to use SuiteCRM's APIs.
 
