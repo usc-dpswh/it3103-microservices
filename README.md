@@ -1,3 +1,11 @@
+# Table of Contents
+
+1. [SuiteCRM](#suitecrm)
+   - [Initial Setup](#initial-setup)
+   - [API Configuration](#api-configuration)
+2. [SnipeIt](#snipeit)
+3. [HelpDesk](#helpdesk)
+
 # Getting Started
 
 In order to quickly spin up each of the microservices, please follow the commands below.
@@ -161,7 +169,7 @@ At the top right of the navbar, hover your mouse over at the profile icon. This 
 
 ![alt text](public/suitecrm/image-14.png)
 
-If you intend on putting a **secret,** make sure to remember it, however, inputting a secret is **OPTIONAL.**
+If you intend on putting a **secret,** make sure to remember it. However, inputting a secret is **OPTIONAL.**
 
 Click **Save** when you're ready. After creating your new client credentials, you should now have access to your newly created client's ID like below.
 
@@ -192,11 +200,10 @@ Keep the `Client ID` in mind as we will use this in the next step.
 4. Enter your newly created `Access Token` from the [previous request](public/suitecrm/image-15.png).
 5. Click send. You will receive the whole list of configurable API endpoints from SuiteCRM.
 
-> **TIP:** In order to easily view it, you can choose to save the outputted JSON and open it in your browser so you have more space to view all the listed API endpoints.
+> **TIP:** In order to easily view the API documentation, you can choose to save the outputted JSON and open it in your browser so you have more space to view all the listed API endpoints.
 
 Congratulations! You're now ready to use SuiteCRM's APIs.
 
-## Test
-# it3103-microservices
-# it3103-microservices
-# it3103-microservices
+# SnipeIt
+
+# HelpDesk
