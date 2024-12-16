@@ -1,5 +1,6 @@
 services:
-  mariadb:
+  # Database service name should match with .env "SUITECRM_DATABASE_HOST"
+  suitecrm-db:
     image: docker.io/bitnami/mariadb:latest
     environment:
       ALLOW_EMPTY_PASSWORD: yes
@@ -9,92 +10,15 @@ services:
     volumes:
       - "mariadb_data:/bitnami/mariadb"
     networks:
-      - suitecrm_network # Assign to mariadb network
+      - suitecrm_network
     ports:
       - "3306:3306"
-
-  suitecrm:
-    image: docker.io/bitnami/suitecrm:8
-    ports:
-      - "${SUITECRM_EXTERNAL_HTTP_PORT_NUMBER}:8080"
-      - "443:${SUITECRM_EXTERNAL_HTTPS_PORT_NUMBER}"
-    environment:
-      SUITECRM_USERNAME: ${SUITECRM_USERNAME}
-      SUITECRM_PASSWORD: ${SUITECRM_PASSWORD}
-      SUITECRM_HOST: localhost
-      SUITECRM_DATABASE_HOST: ${SUITECRM_DATABASE_HOST}
-      SUITECRM_DATABASE_PORT_NUMBER: ${SUITECRM_DATABASE_PORT_NUMBER}
-      SUITECRM_DATABASE_USER: ${SUITECRM_DATABASE_USER}
-      SUITECRM_DATABASE_NAME: ${SUITECRM_DATABASE_NAME}
-      SUITECRM_DATABASE_PASSWORD: ${SUITECRM_DATABASE_PASSWORD}
-      ALLOW_EMPTY_PASSWORD: yes
-    volumes:
-      - "suitecrm_data:/bitnami/suitecrm"
-      - ./CRM/bootstrap.sh:/opt/bitnami/scripts/suitecrm/bootstrap.sh
-    depends_on:
-      - mariadb
-    networks:
-      - app_network
-      - suitecrm_network # Assign to mariadb network
-
-  snipeit:
-    image: snipe/snipe-it:${SNIPEIT_APP_VERSION:-v7.0.11}
-    restart: unless-stopped
-    volumes:
-      - snipeit_data:/var/lib/snipeit # Using snipeit_data for persistent storage of Snipe-IT application data
-    ports:
-      - "${SNIPEIT_APP_PORT:-8001}:80"
-    depends_on:
-      snipeit-db:
-        condition: service_healthy
-    networks:
-      - app_network
-      - snipeit_network # Assign to snipeit network
-    environment:
-      # APP SETTINGS
-      APP_ENV: ${SNIPEIT_APP_ENV}
-      APP_DEBUG: ${SNIPEIT_APP_DEBUG}
-      APP_KEY: ${SNIPEIT_APP_KEY}
-      APP_URL: ${SNIPEIT_APP_URL}
-      APP_TIMEZONE: ${SNIPEIT_APP_TIMEZONE}
-      APP_LOCALE: ${SNIPEIT_APP_LOCALE}
-      MAX_RESULTS: ${SNIPEIT_MAX_RESULTS}
-
-      # DB SETTINGS
-      DB_CONNECTION: ${SNIPEIT_DB_CONNECTION}
-      DB_HOST: ${SNIPEIT_DB_HOST}
-      DB_PORT: ${SNIPEIT_DB_PORT}
-      DB_DATABASE: ${SNIPEIT_DB_DATABASE}
-      DB_USERNAME: ${SNIPEIT_DB_USERNAME}
-      DB_PASSWORD: ${SNIPEIT_DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${SNIPEIT_MYSQL_ROOT_PASSWORD}
-      DB_PREFIX: ${SNIPEIT_DB_PREFIX}
-      DB_DUMP_PATH: ${SNIPEIT_DB_DUMP_PATH}
-      DB_CHARSET: ${SNIPEIT_DB_CHARSET}
-      DB_COLLATION: ${SNIPEIT_DB_COLLATION}
-
-      # MAIL SETTINGS
-      MAIL_MAILER: ${SNIPEIT_MAIL_MAILER}
-      MAIL_HOST: ${SNIPEIT_MAIL_HOST}
-      MAIL_PORT: ${SNIPEIT_MAIL_PORT}
-      MAIL_USERNAME: ${SNIPEIT_MAIL_USERNAME}
-      MAIL_PASSWORD: ${SNIPEIT_MAIL_PASSWORD}
-      MAIL_TLS_VERIFY_PEER: ${SNIPEIT_MAIL_TLS_VERIFY_PEER}
-      MAIL_FROM_ADDR: ${SNIPEIT_MAIL_FROM_ADDR}
-      MAIL_FROM_NAME: ${SNIPEIT_MAIL_FROM_NAME}
-      MAIL_REPLYTO_ADDR: ${SNIPEIT_MAIL_REPLYTO_ADDR}
-      MAIL_REPLYTO_NAME: ${SNIPEIT_MAIL_REPLYTO_NAME}
-      MAIL_AUTO_EMBED_METHOD: ${SNIPEIT_MAIL_AUTO_EMBED_METHOD}
-
-      # DATA PROTECTION SETTINGS
-      ALLOW_BACKUP_DELETE: ${SNIPEIT_ALLOW_BACKUP_DELETE}
-      ALLOW_DATA_PURGE: ${SNIPEIT_ALLOW_DATA_PURGE}
-
+  # Database service name should match with .env "SNIPEIT_DB_HOST"
   snipeit-db:
     image: mariadb:11.5.2
     restart: unless-stopped
     volumes:
-      - snipeit_data:/var/lib/mysql # Using snipeit_data for persistent storage of database files
+      - snipeit_data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: ${SNIPEIT_DB_DATABASE}
       MYSQL_USER: ${SNIPEIT_DB_USERNAME}
@@ -121,10 +45,78 @@ services:
       - snipeit_network # Assign to snipeit network
     ports:
       - "3307:${SNIPEIT_DB_PORT}"
-
+  suitecrm:
+    image: docker.io/bitnami/suitecrm:8
+    ports:
+      - "${SUITECRM_EXTERNAL_HTTP_PORT_NUMBER}:8080"
+      - "443:${SUITECRM_EXTERNAL_HTTPS_PORT_NUMBER}"
+    environment:
+      SUITECRM_USERNAME: ${SUITECRM_USERNAME}
+      SUITECRM_PASSWORD: ${SUITECRM_PASSWORD}
+      SUITECRM_HOST: localhost
+      SUITECRM_DATABASE_HOST: ${SUITECRM_DATABASE_HOST}
+      SUITECRM_DATABASE_PORT_NUMBER: ${SUITECRM_DATABASE_PORT_NUMBER}
+      SUITECRM_DATABASE_USER: ${SUITECRM_DATABASE_USER}
+      SUITECRM_DATABASE_NAME: ${SUITECRM_DATABASE_NAME}
+      SUITECRM_DATABASE_PASSWORD: ${SUITECRM_DATABASE_PASSWORD}
+      ALLOW_EMPTY_PASSWORD: yes
+    volumes:
+      - "suitecrm_data:/bitnami/suitecrm"
+      - ./CRM/bootstrap.sh:/opt/bitnami/scripts/suitecrm/bootstrap.sh
+    depends_on:
+      - suitecrm-db
+    networks:
+      - suitecrm_network
+  snipeit:
+    image: snipe/snipe-it:${SNIPEIT_APP_VERSION:-v7.0.11}
+    restart: unless-stopped
+    volumes:
+      - snipeit_data:/var/lib/snipeit
+    ports:
+      - "${SNIPEIT_APP_PORT:-8001}:80"
+    depends_on:
+      snipeit-db:
+        condition: service_healthy
+    networks:
+      - snipeit_network
+    environment:
+      # APP SETTINGS
+      APP_ENV: ${SNIPEIT_APP_ENV}
+      APP_DEBUG: ${SNIPEIT_APP_DEBUG}
+      APP_KEY: ${SNIPEIT_APP_KEY}
+      APP_URL: ${SNIPEIT_APP_URL}
+      APP_TIMEZONE: ${SNIPEIT_APP_TIMEZONE}
+      APP_LOCALE: ${SNIPEIT_APP_LOCALE}
+      MAX_RESULTS: ${SNIPEIT_MAX_RESULTS}
+      # DB SETTINGS
+      DB_CONNECTION: ${SNIPEIT_DB_CONNECTION}
+      DB_HOST: ${SNIPEIT_DB_HOST}
+      DB_PORT: ${SNIPEIT_DB_PORT}
+      DB_DATABASE: ${SNIPEIT_DB_DATABASE}
+      DB_USERNAME: ${SNIPEIT_DB_USERNAME}
+      DB_PASSWORD: ${SNIPEIT_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${SNIPEIT_MYSQL_ROOT_PASSWORD}
+      DB_PREFIX: ${SNIPEIT_DB_PREFIX}
+      DB_DUMP_PATH: ${SNIPEIT_DB_DUMP_PATH}
+      DB_CHARSET: ${SNIPEIT_DB_CHARSET}
+      DB_COLLATION: ${SNIPEIT_DB_COLLATION}
+      # MAIL SETTINGS
+      MAIL_MAILER: ${SNIPEIT_MAIL_MAILER}
+      MAIL_HOST: ${SNIPEIT_MAIL_HOST}
+      MAIL_PORT: ${SNIPEIT_MAIL_PORT}
+      MAIL_USERNAME: ${SNIPEIT_MAIL_USERNAME}
+      MAIL_PASSWORD: ${SNIPEIT_MAIL_PASSWORD}
+      MAIL_TLS_VERIFY_PEER: ${SNIPEIT_MAIL_TLS_VERIFY_PEER}
+      MAIL_FROM_ADDR: ${SNIPEIT_MAIL_FROM_ADDR}
+      MAIL_FROM_NAME: ${SNIPEIT_MAIL_FROM_NAME}
+      MAIL_REPLYTO_ADDR: ${SNIPEIT_MAIL_REPLYTO_ADDR}
+      MAIL_REPLYTO_NAME: ${SNIPEIT_MAIL_REPLYTO_NAME}
+      MAIL_AUTO_EMBED_METHOD: ${SNIPEIT_MAIL_AUTO_EMBED_METHOD}
+      # DATA PROTECTION SETTINGS
+      ALLOW_BACKUP_DELETE: ${SNIPEIT_ALLOW_BACKUP_DELETE}
+      ALLOW_DATA_PURGE: ${SNIPEIT_ALLOW_DATA_PURGE}
 # Define networks at the bottom of the file
 networks:
-  app_network:
   suitecrm_network:
   snipeit_network:
 
