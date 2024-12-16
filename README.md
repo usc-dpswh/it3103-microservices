@@ -1,10 +1,11 @@
 # Table of Contents
 
 1. [SuiteCRM](#suitecrm)
-   - [Initial Setup](#initial-setup)
+   - [Standalone Setup](#initial-setup)
    - [API Configuration](#api-configuration)
 2. [SnipeIt](#snipeit)
 3. [HelpDesk](#helpdesk)
+4. [Docker Compose]()
 
 # Getting Started
 
@@ -12,9 +13,9 @@ In order to quickly spin up each of the microservices, please follow the command
 
 # SuiteCRM
 
-## Initial Setup
+## Standalone Setup
 
-This setup of SuiteCRM utilizes Bitnami's help through the use of Docker public/suitecrm/images. Basically, we will be running SuiteCRM through Docker like the other microservices.
+This setup of SuiteCRM utilizes Bitnami's help through the use of Docker public/suitecrm/images. This will be how we can setup a standalone version of SuiteCRM, meaning, only SuiteCRM and no other microservices.
 
 ### Pull the Bitnami SuiteCRM public/suitecrm/image
 
@@ -64,10 +65,10 @@ If you have finally confirmed that your Docker containers (_Mariadb_ and _SuiteC
 
 ### Open SuiteCRM in your browser
 
-Enter the URL below into your web browser and wait for SuiteCRM to open up.
+Enter the URL below into your web browser and wait for SuiteCRM to open up. _(port may vary depending on what was configured in the .env file `SUITECRM_EXTERNAL_HTTP_PORT_NUMBER`)_
 
 ```
-localhost:80
+localhost:8000
 ```
 
 You will be greeted by a login screen.
@@ -168,7 +169,7 @@ Keep the `Client ID` in mind as we will use this in the next step.
 
 1. Configure to use OAuth 2.0
 2. Select Grant Type `Client Credentials`
-3. Access Token URL should be `http://localhost:80/legacy/Api/access_token`
+3. Access Token URL should be `http://localhost:<port-number>/legacy/Api/access_token`
 4. `Client ID` should be your newly created client's client ID. Refer [here](public/suitecrm/image-16.png).
 5. `Client Secret` should be the secret that you configured during the creation of your new client credential. (OPTIONAL)
 6. Click **Get Access Token** and you should be sent a JSON like the picture above.
@@ -178,7 +179,7 @@ Keep the `Client ID` in mind as we will use this in the next step.
 ![alt text](public/suitecrm/image-18.png)
 
 1. Navigate to the `Auth` section again.
-2. Configure a `GET` request with the API endpoint `http://localhost:80/legacy/Api/V8/meta/swagger.json`
+2. Configure a `GET` request with the API endpoint `http://localhost:<port-number>/legacy/Api/V8/meta/swagger.json`
 3. Set to `Bearer Token`
 4. Enter your newly created `Access Token` from the [previous request](public/suitecrm/image-15.png).
 5. Click send. You will receive the whole list of configurable API endpoints from SuiteCRM.
