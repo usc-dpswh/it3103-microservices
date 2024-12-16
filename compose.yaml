@@ -62,7 +62,6 @@ services:
       ALLOW_EMPTY_PASSWORD: yes
     volumes:
       - "suitecrm_data:/bitnami/suitecrm"
-      - ./CRM/bootstrap.sh:/opt/bitnami/scripts/suitecrm/bootstrap.sh
     depends_on:
       - suitecrm-db
     networks:

@@ -115,28 +115,10 @@ You'll know you're inside your Docker container when your terminal will look som
 
 When you're inside the OAuth2 directory, do the following:
 
-**Generate a private key**
+**Generate key and change key permissions**
 
 ```
-openssl genrsa -out private.key 2048
-```
-
-**Generate a public key**
-
-```
-openssl rsa -in private.key -pubout -out public.key
-```
-
-**Change key permissions**
-
-```
-chmod 600 private.key public.key
-```
-
-**Change permission of the key to daemon**
-
-```
-chown daemon:daemon p*.key
+openssl genrsa -out private.key 2048 && openssl rsa -in private.key -pubout -out public.key && chmod 600 private.key public.key && chown daemon:daemon p*.key
 ```
 
 After that you're set for executing API calls through SuiteCRM's API Endpoints.
