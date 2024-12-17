@@ -1,38 +1,12 @@
-import dotenv from "dotenv";
+// SuiteRoutes.js
+
 import express from "express";
-import cors from "cors";
-import axios from "axios";
+import * as SuiteControllers from "../controllers/SuiteControllers.js";
 
-export const router = express.Router()
+export const router = express.Router();
 
-router.post("/oauth2/suitecrm", (request, response) => {
-    const clientID = "d7f511bb-3986-576c-84dc-67602d83993d";
-    const clientSecret = "achille";
-  
-    // Create URLSearchParams for application/x-www-form-urlencoded
-    const qs = new URLSearchParams();
-    qs.set("grant_type", "client_credentials");
-    qs.set("client_id", clientID);
-    qs.set("client_secret", clientSecret);
-  
-    try {
-      // Make the POST request with correct parameters
-      const response = await axios.post(
-        "http://localhost:8000/legacy/Api/access_token", // Correct API endpoint
-        qs.toString(), // Pass the URL-encoded string as the body
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded", // Set content type
-          },
-        },
-      );
-  
-      res.json(response.data); // Send the response data back to the client
-    } catch (error) {
-      console.error(
-        "Error fetching data:",
-        error.response ? error.response.data : error.message,
-      );
-      res.status(500).send("Error fetching data");
-    }
-})
+router.post("/oauth2/token", SuiteControllers.getBearerToken);
+router.get("/accounts", SuiteControllers.getAllUsers);
+router.get("/accounts/:id", SuiteControllers.getUserById);
+router.post("/accounts", SuiteControllers.createUser);
+router.delete("/accounts", SuiteControllers.deleteUser);

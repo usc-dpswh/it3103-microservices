@@ -1,33 +1,137 @@
-export const GetBearerToken =
-  ("/oauth2/suitecrm",
-  async (request, response) => {
-    const clientID = "d7f511bb-3986-576c-84dc-67602d83993d";
-    const clientSecret = "achille";
+// SuiteControllers.js
 
-    // Create URLSearchParams for application/x-www-form-urlencoded
-    const qs = new URLSearchParams();
-    qs.set("grant_type", "client_credentials");
-    qs.set("client_id", clientID);
-    qs.set("client_secret", clientSecret);
+import axios from "axios";
+import * as Config from "../config/constants.js";
 
-    try {
-      // Make the POST request with correct parameters
-      const response = await axios.post(
-        "http://localhost:8000/legacy/Api/access_token", // Correct API endpoint
-        qs.toString(), // Pass the URL-encoded string as the body
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded", // Set content type
-          },
-        }
-      );
+export const getBearerToken = async (req, res) => {
+  const clientID = "d7f511bb-3986-576c-84dc-67602d83993d";
+  const clientSecret = "achille";
 
-      res.json(response.data); // Send the response data back to the client
-    } catch (error) {
-      console.error(
-        "Error fetching data:",
-        error.response ? error.response.data : error.message
-      );
-      res.status(500).send("Error fetching data");
-    }
-  });
+  const qs = new URLSearchParams();
+  qs.set("grant_type", "client_credentials");
+  qs.set("client_id", clientID);
+  qs.set("client_secret", clientSecret);
+
+  try {
+    const response = await axios.post(
+      "http://localhost:8000/legacy/Api/access_token",
+      qs.toString(),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    console.error(
+      "Error fetching data:",
+      error.response ? error.response.data : error.message
+    );
+    res.status(500).send("Error fetching data");
+  }
+};
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const response = await axios.get(`${Config.CRM_URL}/module/Accounts`, {
+      headers: {
+        Authorization: `Bearer ${Config.CRM_API_KEY}`,
+      },
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error(
+      "Error fetching data:",
+      error.response ? error.response.data : error.message
+    );
+    res.status(500).send("Error fetching data");
+  }
+};
+
+export const getUserById = async (req, res) => {
+  const userid = req.params.id;
+
+  if (!userid || userid.trim() === "") {
+    console.error("Passed parameter 'id' is not a valid value.");
+    return res
+      .status(400)
+      .send("Error: 'id' parameter is required and cannot be empty.");
+  }
+
+  try {
+    const response = await axios.get(
+      `${Config.CRM_URL}/module/Accounts/${userid}`,
+      {
+        headers: {
+          Authorization: `Bearer ${Config.CRM_API_KEY}`,
+        },
+      }
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error(
+      "Error fetching data:",
+      error.response ? error.response.data : error.message
+    );
+    res.status(500).send("Error fetching data");
+  }
+};
+
+export const createUser = async (req, res) => {
+  const newUser = req.body.name;
+
+  const requestBody = {
+    data: {
+      type: "Accounts",
+      attributes: {
+        name: newUser,
+      },
+    },
+  };
+
+  try {
+    const response = await axios.post(`${Config.CRM_URL}/module`, requestBody, {
+      headers: {
+        Authorization: `Bearer ${Config.CRM_API_KEY}`,
+      },
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error(
+      "Something went wrong!",
+      error.response ? error.response.data : error.message
+    );
+    res.status(500).send("Error fetching data");
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  const userid = req.body.userid;
+
+  if (!userid || userid.trim() === "") {
+    console.error("Passed query parameter 'id' is not a valid value.");
+    return res
+      .status(400)
+      .send("Error: 'id' query parameter is required and cannot be empty.");
+  }
+
+  try {
+    const response = await axios.delete(
+      `${Config.CRM_URL}/module/Accounts/${userid}`,
+      {
+        headers: {
+          Authorization: `Bearer ${Config.CRM_API_KEY}`,
+        },
+      }
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error(
+      "Something went wrong!",
+      error.response ? error.response.data : error.message
+    );
+    res.status(500).send("Error fetching data");
+  }
+};
