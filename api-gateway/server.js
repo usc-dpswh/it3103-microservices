@@ -1,26 +1,25 @@
-// Load environment variables from .env file
-import dotenv from "dotenv";
+// server.js
+
 import express from "express";
 import cors from "cors";
-import axios from "axios";
-import { router as SuiteRoute } from "./routes/SuiteRoutes";
+import { router as SuiteRoutes } from "./routes/SuiteRoutes.js";
+import dotenv from "dotenv";
 
-dotenv.config(); // Load environment variables
+dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Use PORT from .env or default to 3000
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.json()); // Middleware to parse JSON bodies if needed
+app.use(express.json());
 
-// Root endpoint
 app.get("/", (req, res) => {
   res.json({ message: `Welcome to the API Gateway of Dreams! Port ${PORT}!` });
 });
 
-app.use("/oauth2/suitecrm", SuiteRoute);
+// Use the SuiteRoutes directly under '/oauth2'
+app.use("/oauth2", SuiteRoutes);
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
