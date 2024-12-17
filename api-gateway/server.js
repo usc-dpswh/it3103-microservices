@@ -17,8 +17,7 @@ app.get("/", (req, res) => {
   res.json({ message: `Welcome to the API Gateway of Dreams! Port ${PORT}!` });
 });
 
-// Use the SuiteRoutes directly under '/oauth2'
-app.use("/oauth2", SuiteRoutes);
+app.use("/suitecrm", SuiteRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
