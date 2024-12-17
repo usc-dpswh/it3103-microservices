@@ -20,31 +20,38 @@ const USERS = [
 ];
 
 export const loginUser = async (req, res) => {
-  const { username, password } = req.body;
+  // Check if user is already logged in by verifying existing token
+  const existingToken = req.cookies.auth_token;
 
-  console.log("Login attempt:", {
-    username,
-    providedPassword: password,
-  });
+  if (existingToken) {
+    try {
+      // Verify the existing token
+      const decoded = jwt.verify(existingToken, process.env.JWT_SECRET);
+      return res.status(400).json({
+        error: "User already logged in",
+        username: decoded.username,
+      });
+    } catch (err) {
+      // If token is invalid, continue with login process
+      // This clears any invalid existing token
+      res.clearCookie("auth_token");
+    }
+  }
+
+  const { username, password } = req.body;
 
   try {
     // Find user
     const user = USERS.find((u) => u.username === username);
 
     if (!user) {
-      console.log("User not found:", username);
       return res
         .status(401)
         .json({ error: "Authentication failed - User not found" });
     }
 
-    // Log the stored hashed password for debugging
-    console.log("Stored hashed password:", user.password);
-
     // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
-
-    console.log("Password comparison result:", isMatch);
 
     if (!isMatch) {
       return res
@@ -77,14 +84,23 @@ export const loginUser = async (req, res) => {
   }
 };
 
+export const logoutUser = (req, res) => {
+  // Check if user is already logged out
+  const existingToken = req.cookies.auth_token;
+
+  if (!existingToken) {
+    return res.status(400).json({ error: "No active user session" });
+  }
+
+  // Clear the authentication cookie
+  res.clearCookie("auth_token");
+
+  res.json({ message: "Logged out successfully" });
+};
+
 // Utility route to help generate new hashed passwords if needed
 export const generateHashedPassword = async (req, res) => {
   const { password } = req.body;
   const hashedPassword = await hashPassword(password);
   res.json({ hashedPassword });
-};
-export const logoutUser = (req, res) => {
-  // Clear the authentication cookie
-  res.clearCookie("auth_token");
-  res.json({ message: "Logged out successfully" });
 };
