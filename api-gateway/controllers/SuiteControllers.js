@@ -51,13 +51,13 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const getUserById = async (req, res) => {
-  const userid = req.query.userid;
+  const userid = req.params.id;
 
   if (!userid || userid.trim() === "") {
-    console.error("Passed query parameter 'id' is not a valid value.");
+    console.error("Passed parameter 'id' is not a valid value.");
     return res
       .status(400)
-      .send("Error: 'id' query parameter is required and cannot be empty.");
+      .send("Error: 'id' parameter is required and cannot be empty.");
   }
 
   try {
@@ -79,57 +79,8 @@ export const getUserById = async (req, res) => {
   }
 };
 
-export const getUsersByName = async (req, res) => {
-  const user = req.query.user;
-
-  if (!user || user.trim() === "") {
-    console.error("Passed query parameter 'user' is not a valid value.");
-    return res
-      .status(400)
-      .send("Error: 'user' query parameter is required and cannot be empty.");
-  }
-
-  try {
-    const response = await axios.get(`${Config.CRM_URL}/module/Accounts`, {
-      headers: {
-        Authorization: `Bearer ${Config.CRM_API_KEY}`,
-      },
-    });
-
-    const fetchedUsers = response.data.data;
-
-    if (!Array.isArray(fetchedUsers)) {
-      console.error("Fetched users data is not an array:", fetchedUsers);
-      return res
-        .status(500)
-        .send("Error: Fetched users data is not in expected format.");
-    }
-
-    const filteredUsers = fetchedUsers.filter(
-      (userObj) =>
-        userObj?.attributes?.name &&
-        userObj?.attributes?.name.toLowerCase() === user.toLowerCase()
-    );
-
-    res.json(filteredUsers);
-  } catch (error) {
-    console.error(
-      "Error fetching data:",
-      error.response ? error.response.data : error.message
-    );
-    res.status(500).send("Error fetching data");
-  }
-};
-
 export const createUser = async (req, res) => {
-  const newUser = req.query.name;
-
-  if (!newUser || newUser.trim() === "") {
-    console.error("Passed query parameter 'name' is not a valid value.");
-    return res
-      .status(400)
-      .send("Error: 'name' query parameter is required and cannot be empty.");
-  }
+  const newUser = req.body.name;
 
   const requestBody = {
     data: {
@@ -157,7 +108,7 @@ export const createUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-  const userid = req.query.userid;
+  const userid = req.body.userid;
 
   if (!userid || userid.trim() === "") {
     console.error("Passed query parameter 'id' is not a valid value.");
