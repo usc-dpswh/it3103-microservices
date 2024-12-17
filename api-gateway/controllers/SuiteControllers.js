@@ -23,14 +23,14 @@ export const getBearerToken = async (req, res) => {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      }
+      },
     );
 
     res.json(response.data);
   } catch (error) {
     console.error(
       "Error fetching data:",
-      error.response ? error.response.data : error.message
+      error.response ? error.response.data : error.message,
     );
     res.status(500).send("Error fetching data");
   }
@@ -47,7 +47,7 @@ export const getAllUsers = async (req, res) => {
   } catch (error) {
     console.error(
       "Error fetching data:",
-      error.response ? error.response.data : error.message
+      error.response ? error.response.data : error.message,
     );
     res.status(500).send("Error fetching data");
   }
@@ -70,13 +70,13 @@ export const getUserById = async (req, res) => {
         headers: {
           Authorization: `Bearer ${Config.CRM_API_KEY}`,
         },
-      }
+      },
     );
     res.json(response.data);
   } catch (error) {
     console.error(
       "Error fetching data:",
-      error.response ? error.response.data : error.message
+      error.response ? error.response.data : error.message,
     );
     res.status(500).send("Error fetching data");
   }
@@ -104,7 +104,7 @@ export const createUser = async (req, res) => {
   } catch (error) {
     console.error(
       "Something went wrong!",
-      error.response ? error.response.data : error.message
+      error.response ? error.response.data : error.message,
     );
     res.status(500).send("Error fetching data");
   }
@@ -127,13 +127,13 @@ export const deleteUser = async (req, res) => {
         headers: {
           Authorization: `Bearer ${Config.CRM_API_KEY}`,
         },
-      }
+      },
     );
     res.json(response.data);
   } catch (error) {
     console.error(
       "Something went wrong!",
-      error.response ? error.response.data : error.message
+      error.response ? error.response.data : error.message,
     );
     res.status(500).send("Error fetching data");
   }
@@ -160,13 +160,13 @@ export const updateUser = async (req, res) => {
         headers: {
           Authorization: `Bearer ${Config.CRM_API_KEY}`,
         },
-      }
+      },
     );
     res.json(response.data);
   } catch (error) {
     console.error(
       "Something went wrong!",
-      error.response ? error.response.data : error.message
+      error.response ? error.response.data : error.message,
     );
     res.status(500).send("Error fetching data");
   }
