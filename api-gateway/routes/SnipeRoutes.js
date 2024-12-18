@@ -1,11 +1,47 @@
+// SnipeRoutes.js
+
 import express from "express";
-import * as AuthController from "../controllers/AuthenticationControllers.js";
+import {
+  HardwareControllers,
+  StatusLabelControllers,
+} from "../controllers/SnipeControllers.js";
+import { authenticateToken } from "../middlewares/authMiddleware.js";
 
 export const router = express.Router();
 
-// Authentication routes
-router.post("/login", AuthController.loginUser);
-router.post("/logout", AuthController.logoutUser);
-router.post("/generate", AuthController.generateHashedPassword);
+// Hardware Routes
+router.get("/hardware", authenticateToken, HardwareControllers.getAllHardware);
+router.get(
+  "/hardware/:id",
+  authenticateToken,
+  HardwareControllers.getHardwareById
+);
 
-router.post("/hardware");
+// People Routes
+
+// Status Label Routes
+router.get(
+  "/statuslabels",
+  authenticateToken,
+  StatusLabelControllers.getAllStatusLabels
+);
+router.get(
+  "/statuslabels/:id",
+  authenticateToken,
+  StatusLabelControllers.getStatusLabelById
+);
+router.patch(
+  "/statuslabels/:id",
+  authenticateToken,
+  StatusLabelControllers.updateStatusLabel
+);
+router.delete(
+  "/statuslabels/:id",
+  authenticateToken,
+  StatusLabelControllers.deleteStatusLabelById
+);
+router.post(
+  "/statuslabels",
+  authenticateToken,
+  StatusLabelControllers.createStatusLabel
+);
