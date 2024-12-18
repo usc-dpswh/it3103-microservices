@@ -7,3 +7,5 @@ export const router = express.Router();
 router.post("/login", AuthController.loginUser);
 router.post("/logout", AuthController.logoutUser);
 router.post("/generate", AuthController.generateHashedPassword);
+
+router.post("/hardware");
