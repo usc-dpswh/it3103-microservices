@@ -26,7 +26,6 @@ app.use("/suitecrm", SuiteRoutes);
 app.use("/snipeit", SnipeRoutes);
 app.use("/auth", AuthRoutes);
 
-// Start server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
