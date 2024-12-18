@@ -10,38 +10,38 @@ export const router = express.Router();
 
 router.post(
   "/accounts",
+  rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  rateLimitMiddleware,
-  SuiteControllers.createUser
+  SuiteControllers.createUser,
 );
 router.get(
   "/accounts",
+  rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  rateLimitMiddleware,
-  SuiteControllers.getAllUsers
+  SuiteControllers.getAllUsers,
 );
 router.get(
   "/accounts/:id",
+  rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin", "user"),
-  rateLimitMiddleware,
-  SuiteControllers.getUserById
+  SuiteControllers.getUserById,
 );
 router.patch(
   "/accounts",
+  rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  rateLimitMiddleware,
-  SuiteControllers.updateUser
+  SuiteControllers.updateUser,
 );
 router.delete(
   "/accounts",
+  rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  rateLimitMiddleware,
-  SuiteControllers.deleteUser
+  SuiteControllers.deleteUser,
 );
 
 router.post("/oauth2/token", SuiteControllers.getBearerToken);

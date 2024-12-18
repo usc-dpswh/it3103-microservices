@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const selectTicketSchema = z.object({
   id: z.string().cuid2(),
@@ -8,11 +8,14 @@ export const selectTicketSchema = z.object({
   issueType: z.enum(["sales", "product", "other"]).default("other"),
   description: z.string(),
   status: z.enum(["open", "in-progress", "resolved", "closed"]).default("open"),
-  priority: z.enum(["low", "medium", "high", "critical"]).nullable().default(null),
+  priority: z
+    .enum(["low", "medium", "high", "critical"])
+    .nullable()
+    .default(null),
   createdBy: z.string().uuid(),
   createdAt: z.date(),
   updatedAt: z.date(),
-})
+});
 
 export const insertTicketSchema = selectTicketSchema.partial({
   id: true,
@@ -24,6 +27,6 @@ export const insertTicketSchema = selectTicketSchema.partial({
   priority: true,
   createdAt: true,
   updatedAt: true,
-})
+});
 
-export type Ticket = z.infer<typeof selectTicketSchema>
+export type Ticket = z.infer<typeof selectTicketSchema>;

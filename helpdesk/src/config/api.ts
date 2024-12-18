@@ -1,5 +1,5 @@
-import ky from "ky"
-import { env } from "./env"
+import ky from "ky";
+import { env } from "./env";
 
 export const crmApi = ky.create({
   prefixUrl: env.CRM_API_URL,
@@ -9,7 +9,7 @@ export const crmApi = ky.create({
   retry: {
     limit: 0,
   },
-})
+});
 
 export const imsApi = ky.create({
   prefixUrl: env.IMS_API_URL,
@@ -19,4 +19,4 @@ export const imsApi = ky.create({
   retry: {
     limit: 0,
   },
-})
+});

@@ -12,5 +12,5 @@ router.post("/logout", rateLimitMiddleware, AuthController.logoutUser);
 router.post(
   "/generate",
   rateLimitMiddleware,
-  AuthController.generateHashedPassword
+  AuthController.generateHashedPassword,
 );

@@ -1,6 +1,5 @@
 import rateLimit from "express-rate-limit";
 
-// Create a rate limiter function
 const createRateLimiter = (options) => {
   const limiter = rateLimit({
     ...options,
@@ -12,7 +11,6 @@ const createRateLimiter = (options) => {
   };
 };
 
-// Export the rate limiter middleware
 export const rateLimitMiddleware = createRateLimiter({
   windowMs: 1000 * 10,
   max: 5,

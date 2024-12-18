@@ -35,7 +35,7 @@ ticket
           message:
             error instanceof Error ? error.message : "Something went wrong",
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
   });
@@ -58,7 +58,7 @@ ticket
           message:
             error instanceof Error ? error.message : "Something went wrong",
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
   })
@@ -81,7 +81,7 @@ ticket
           message:
             error instanceof Error ? error.message : "Something went wrong",
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
   })
@@ -97,7 +97,7 @@ ticket
         return c.json({ message: "Ticket does not exist" }, { status: 404 });
       return c.json(
         { message: "Ticket deleted successfully" },
-        { status: 204 }
+        { status: 204 },
       );
     } catch (error) {
       return c.json(
@@ -105,7 +105,7 @@ ticket
           message:
             error instanceof Error ? error.message : "Something went wrong",
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
   });

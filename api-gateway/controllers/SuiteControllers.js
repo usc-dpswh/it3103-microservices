@@ -18,13 +18,13 @@ export const SuiteControllers = {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Error fetching data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error fetching data");
     }
@@ -38,13 +38,13 @@ export const SuiteControllers = {
           headers: {
             Authorization: `Bearer ${process.env.SUITECRM_API_KEY}`,
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Error fetching data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error fetching data");
     }
@@ -67,13 +67,13 @@ export const SuiteControllers = {
           headers: {
             Authorization: `Bearer ${process.env.SUITECRM_API_KEY}`,
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Error fetching data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error fetching data");
     }
@@ -99,13 +99,13 @@ export const SuiteControllers = {
           headers: {
             Authorization: `Bearer ${process.env.SUITECRM_API_KEY}`,
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Something went wrong!",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error fetching data");
     }
@@ -128,13 +128,13 @@ export const SuiteControllers = {
           headers: {
             Authorization: `Bearer ${process.env.SUITECRM_API_KEY}`,
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Something went wrong!",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error fetching data");
     }
@@ -161,13 +161,13 @@ export const SuiteControllers = {
           headers: {
             Authorization: `Bearer ${process.env.SUITECRM_API_KEY}`,
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Something went wrong!",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error fetching data");
     }

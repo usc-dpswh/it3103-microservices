@@ -1,6 +1,6 @@
-import { createId } from "@paralleldrive/cuid2"
-import { sql } from "drizzle-orm"
-import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core"
+import { createId } from "@paralleldrive/cuid2";
+import { sql } from "drizzle-orm";
+import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const tickets = sqliteTable(
   "tickets",
@@ -17,13 +17,21 @@ export const tickets = sqliteTable(
       .default("other")
       .notNull(),
     description: text("description"),
-    status: text("status", { enum: ["open", "in-progress", "resolved", "closed"] })
+    status: text("status", {
+      enum: ["open", "in-progress", "resolved", "closed"],
+    })
       .notNull()
       .default("open"),
-    priority: text("priority", { enum: ["low", "medium", "high", "critical"] }).default(sql`NULL`),
+    priority: text("priority", {
+      enum: ["low", "medium", "high", "critical"],
+    }).default(sql`NULL`),
     createdBy: text("created_by").notNull(),
-    createdAt: integer("created_at", { mode: "timestamp" }).default(new Date()).notNull(),
-    updatedAt: integer("updated_at", { mode: "timestamp" }).$onUpdate(() => new Date()),
+    createdAt: integer("created_at", { mode: "timestamp" })
+      .default(new Date())
+      .notNull(),
+    updatedAt: integer("updated_at", { mode: "timestamp" }).$onUpdate(
+      () => new Date(),
+    ),
   },
   (t) => [
     index("issue_type_idx").on(t.status),
@@ -31,4 +39,4 @@ export const tickets = sqliteTable(
     index("priority_idx").on(t.priority),
     index("created_by_idx").on(t.createdBy),
   ],
-)
+);

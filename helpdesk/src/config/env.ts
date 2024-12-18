@@ -1,11 +1,13 @@
-import { z } from "zod"
+import { z } from "zod";
 
 const envSchema = z.object({
   CRM_API_URL: z.string().url(),
   CRM_API_KEY: z.string(),
   IMS_API_URL: z.string().url(),
   IMS_API_KEY: z.string(),
-  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-})
+  NODE_ENV: z
+    .enum(["development", "production", "test"])
+    .default("development"),
+});
 
-export const env = envSchema.parse(process.env)
+export const env = envSchema.parse(process.env);

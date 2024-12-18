@@ -1,6 +1,9 @@
 {
   "name": "helpdesk",
-  "trustedDependencies": ["@biomejs/biome", "esbuild"],
+  "trustedDependencies": [
+    "@biomejs/biome",
+    "esbuild"
+  ],
   "scripts": {
     "dev": "bun --hot ./src/index.ts",
     "lint": "biome check --write",
