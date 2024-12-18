@@ -16,7 +16,6 @@ const PORT = process.env.GATEWAY_PORT || 3000;
 app.use(cookieParser());
 app.use(express.json());
 
-// Routes
 app.get("/", (req, res) => {
   res.json({
     message: `Welcome to the API Gateway of Dreams! Port ${PORT}!`,

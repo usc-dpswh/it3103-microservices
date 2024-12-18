@@ -106,4 +106,5 @@ router.delete(
   authorizeRoles("admin"),
   UserControllers.deleteUserById
 );
+
 // Sales Routes (denoted by Quotes)
