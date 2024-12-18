@@ -117,14 +117,16 @@ services:
 
   # Helpdesk - Listening at port 3001
   helpdesk:
+    ports:
+      - "3001:3001"
     build:
       context: "./helpdesk"
       target: runner
     environment:
-      - "CRM_API_URL=http://localhost:8000/legacy/Api/V8"
-      - "CRM_API_KEY=${SUITECRM_API_KEY}"
-      - "IMS_API_URL=http://localhost:8001/api/v1/"
-      - "IMS_API_KEY=${SNIPEIT_API_KEY}"
+      CRM_API_URL: ${SUITECRM_API_URL}
+      CRM_API_KEY: ${SUITECRM_API_KEY}
+      IMS_API_URL: ${SNIPEIT_API_URL}
+      IMS_API_KEY: ${SNIPEIT_API_KEY}
     networks:
       - app_network
     volumes:

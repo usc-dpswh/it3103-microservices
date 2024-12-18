@@ -33,7 +33,9 @@ export async function ticketRoutes(fastify: FastifyInstance) {
 
   fastify.post("/", async (request, response) => {
     try {
-      const ticket = ticketSchema.omit({ id: true, createdAt: true, updatedAt: true }).parse(request.body)
+      const ticket = ticketSchema
+        .omit({ id: true, createdAt: true, updatedAt: true, orderId: true, productId: true, description: true })
+        .parse(request.body)
       const ticketError = await validateTicket(ticket)
       if (ticketError) {
         return response.notFound(ticketError.message)

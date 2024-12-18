@@ -1,7 +1,6 @@
 // SuiteControllers.js
 
 import axios from "axios";
-import * as Config from "../config/constants.js";
 
 export const getBearerToken = async (req, res) => {
   const clientID = "d7f511bb-3986-576c-84dc-67602d83993d";

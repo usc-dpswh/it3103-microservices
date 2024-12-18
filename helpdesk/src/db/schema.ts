@@ -12,7 +12,9 @@ export const tickets = sqliteTable(
     productId: text("product_id"),
     issueType: text("issue_type", {
       enum: ["order", "product", "other"],
-    }).notNull(),
+    })
+      .default("other")
+      .notNull(),
     description: text("description"),
     status: text("status", { enum: ["open", "in-progress", "resolved", "closed"] })
       .default("open")
