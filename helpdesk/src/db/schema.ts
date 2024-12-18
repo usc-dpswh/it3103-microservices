@@ -30,7 +30,7 @@ export const tickets = sqliteTable(
       .default(new Date())
       .notNull(),
     updatedAt: integer("updated_at", { mode: "timestamp" }).$onUpdate(
-      () => new Date(),
+      () => new Date()
     ),
   },
   (t) => [
@@ -38,5 +38,5 @@ export const tickets = sqliteTable(
     index("status_idx").on(t.status),
     index("priority_idx").on(t.priority),
     index("created_by_idx").on(t.createdBy),
-  ],
+  ]
 );
