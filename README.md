@@ -1,16 +1,27 @@
 # Table of Contents
 
-1. [API Routes](#api-routes)
-2. [SuiteCRM](#suitecrm)
+1. [Getting Started](#getting-started)
+2. [API Routes](#api-routes)
+   - [Authentication](#authentication)
+   - [SuiteCRM](#suitecrm)
+   - [SnipeIt](#snipeit)
+   - [HelpDesk]()
+3. [SuiteCRM](#suitecrm)
    - [Standalone Setup](#initial-setup)
    - [API Configuration](#api-configuration)
-3. [SnipeIt](#snipeit)
-4. [HelpDesk](#helpdesk)
-5. [Docker Compose]()
+4. [SnipeIt](#snipeit)
+5. [HelpDesk](#helpdesk)
+6. [Docker Compose]()
 
 # Getting Started
 
 In order to quickly spin up each of the microservices, please follow the commands below.
+
+```
+docker compose up -d
+```
+
+Once your containers are successfully up, you can now access your services.
 
 # API Routes
 
@@ -18,6 +29,43 @@ Here are the complete list of API routes to the microservices available through 
 
 > [!NOTE]
 > All routes are **ONLY ACCESSIBLE** if the user is authenticated. Please authenticate user first before accessing any API endpoints for all microservices.
+
+## Authentication
+
+Here are the complete list of API routes for basic user authentication using JSON Web Tokens (JWT). We prepared basic users for the demo which is stored in memory.
+
+There are two (2) available users for demo purposes in showcasing Role-Based Access Control (RBAC). These are users: `admin` and `user`. `admin` can access all routes while `user` can only access select routes. Here are their credentials for testing purposes.
+
+Call the `/login` route using either of the request bodies below.
+
+```
+{
+  "username": "admin",
+  "password": "achille"
+}
+```
+
+```
+{
+  "username": "user",
+  "password": "achille"
+}
+```
+
+The base URL is `http://localhost:3000/auth` which is the endpoint for authenticating our users.
+
+| **Route**   | **Method** | **Description**                        | **Authorization** |
+| ----------- | ---------- | -------------------------------------- | ----------------- |
+| `/login`    | `POST`     | Authenticate a user and log them in.   | ❌                |
+| `/logout`   | `POST`     | Log the user out of the application.   | ✅                |
+| `/generate` | `POST`     | Generate a hashed password for a user. | ❌                |
+
+### Notes
+
+- Ensure that the appropriate roles are assigned to users to access restricted routes.
+- Rate limiting is applied to prevent abuse of the API endpoints.
+
+Once you're authenticated, you can proceed to calling all the routes below.
 
 ## SuiteCRM
 
