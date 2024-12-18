@@ -5,13 +5,12 @@
    - [Authentication](#authentication)
    - [SuiteCRM](#suitecrm)
    - [SnipeIt](#snipeit)
-   - [HelpDesk]()
+   - [HelpDesk](#helpdesk)
 3. [SuiteCRM](#suitecrm)
-   - [Standalone Setup](#initial-setup)
+   - [Standalone Setup](#standalone-setup)
    - [API Configuration](#api-configuration)
 4. [SnipeIt](#snipeit)
 5. [HelpDesk](#helpdesk)
-6. [Docker Compose]()
 
 # Getting Started
 
