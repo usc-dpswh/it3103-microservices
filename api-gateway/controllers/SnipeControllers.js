@@ -150,7 +150,7 @@ export const HardwareControllers = {
 
     try {
       const response = await axios.delete(
-        `${process.env.SNIPEIT_API_URL}/statuslabels/${hardwareId}`,
+        `${process.env.SNIPEIT_API_URL}/hardware/${hardwareId}`,
         {
           headers: {
             Authorization: `Bearer ${process.env.SNIPEIT_API_KEY}`,
@@ -162,10 +162,10 @@ export const HardwareControllers = {
       res.json(response.data);
     } catch (error) {
       console.error(
-        "error fetching data:",
+        "Error fetching data:",
         error.response ? error.response.data : error.message
       );
-      res.status(500).send("error fetching data");
+      res.status(500).send("Error in deleting hardware.");
     }
   },
 };

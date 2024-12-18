@@ -24,7 +24,7 @@ router.patch(
 router.delete(
   "/hardware/:id",
   authenticateToken,
-  HardwareControllers.
+  HardwareControllers.deleteHardwareById
 );
 router.post("/hardware", authenticateToken, HardwareControllers.createHardware);
 // People Routes
