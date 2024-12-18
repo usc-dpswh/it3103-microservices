@@ -10,7 +10,7 @@ server.register(ticketRoutes, { prefix: "/tickets" })
 
 server.listen(
   {
-    port: 3000,
+    port: 3001,
     host: env.NODE_ENV === "production" ? "0.0.0.0" : "localhost",
   },
   (error, address) => {
