@@ -2,8 +2,8 @@ import axios from "axios";
 
 export const SuiteControllers = {
   getBearerToken: async (req, res) => {
-    const clientID = "d7f511bb-3986-576c-84dc-67602d83993d";
-    const clientSecret = "achille";
+    const clientID = process.env.SUITECRM_CLIENT_ID;
+    const clientSecret = process.env.SUITECRM_CLIENT_SECRET;
 
     const qs = new URLSearchParams();
     qs.set("grant_type", "client_credentials");

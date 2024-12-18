@@ -20,9 +20,6 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.json({
     message: `Welcome to the API Gateway of Dreams! Port ${PORT}!`,
-    SUITECRM_API_KEY: process.env.SUITECRM_API_KEY,
-    SNIPEIT_API_KEY: process.env.SNIPEIT_API_KEY,
-    HELPDESK_API_KEY: process.env.HELPDESK_API_KEY,
   });
 });
 
