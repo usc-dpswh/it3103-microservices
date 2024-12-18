@@ -1,15 +1,41 @@
+// SuiteRoutes.js
+
 import express from "express";
 import { SuiteControllers } from "../controllers/SuiteControllers.js";
 import { authenticateToken } from "../middlewares/authMiddleware.js";
+import { authorizeRoles } from "../middlewares/roleMiddleware.js";
 
 export const router = express.Router();
 
-// Protected routes - require authentication
-router.post("/accounts", authenticateToken, SuiteControllers.createUser);
-router.get("/accounts", authenticateToken, SuiteControllers.getAllUsers);
-router.get("/accounts/:id", authenticateToken, SuiteControllers.getUserById);
-router.patch("/accounts", authenticateToken, SuiteControllers.updateUser);
-router.delete("/accounts", authenticateToken, SuiteControllers.deleteUser);
+router.post(
+  "/accounts",
+  authenticateToken,
+  authorizeRoles("admin"),
+  SuiteControllers.createUser
+);
+router.get(
+  "/accounts",
+  authenticateToken,
+  authorizeRoles("admin"),
+  SuiteControllers.getAllUsers
+);
+router.get(
+  "/accounts/:id",
+  authenticateToken,
+  authorizeRoles("admin", "user"),
+  SuiteControllers.getUserById
+);
+router.patch(
+  "/accounts",
+  authenticateToken,
+  authorizeRoles("admin"),
+  SuiteControllers.updateUser
+);
+router.delete(
+  "/accounts",
+  authenticateToken,
+  authorizeRoles("admin"),
+  SuiteControllers.deleteUser
+);
 
-// OAuth2 token route remains public
 router.post("/oauth2/token", SuiteControllers.getBearerToken);

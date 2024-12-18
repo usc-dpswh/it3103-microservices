@@ -1,3 +1,5 @@
+// AuthenticationControllers.js
+
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
@@ -14,8 +16,14 @@ const USERS = [
   {
     id: "1",
     username: "admin",
-    // Hashed password for 'password123'
-    password: "$2a$10$LviSDTQLiqvqY4Qr9I66AuorL7aTGZqNUtrHRJVlGV/SPz37Z7bvS",
+    role: "admin", // Added role
+    password: "$2a$10$LviSDTQLiqvqY4Qr9I66AuorL7aTGZqNUtrHRJVlGV/SPz37Z7bvS", // Hashed password for 'password123'
+  },
+  {
+    id: "2",
+    username: "user",
+    role: "user", // Added role
+    password: "$2a$10$LviSDTQLiqvqY4Qr9I66AuorL7aTGZqNUtrHRJVlGV/SPz37Z7bvS", // Same hashed password for demonstration
   },
 ];
 
@@ -61,9 +69,9 @@ export const loginUser = async (req, res) => {
 
     // Create JWT token
     const token = jwt.sign(
-      { id: user.id, username: user.username },
+      { id: user.id, username: user.username, role: user.role }, // Include role in token
       process.env.JWT_SECRET,
-      { expiresIn: "1h" },
+      { expiresIn: "2h" }
     );
 
     // Set cookie with the token
