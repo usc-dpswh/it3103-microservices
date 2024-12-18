@@ -1,15 +1,80 @@
 # Table of Contents
 
-1. [SuiteCRM](#suitecrm)
+1. [API Routes](#api-routes)
+2. [SuiteCRM](#suitecrm)
    - [Standalone Setup](#initial-setup)
    - [API Configuration](#api-configuration)
-2. [SnipeIt](#snipeit)
-3. [HelpDesk](#helpdesk)
-4. [Docker Compose]()
+3. [SnipeIt](#snipeit)
+4. [HelpDesk](#helpdesk)
+5. [Docker Compose]()
 
 # Getting Started
 
 In order to quickly spin up each of the microservices, please follow the commands below.
+
+# API Routes
+
+Here are the complete list of API routes to the microservices available through the custom API Gateway.
+
+> [!NOTE]
+> All routes are **ONLY ACCESSIBLE** if the user is authenticated. Please authenticate user first before accessing any API endpoints for all microservices.
+
+## SuiteCRM
+
+This document provides an overview of the API routes available in the SuiteCRM module, including their descriptions and methods.
+
+The base URL is `http://localhost:3000/suitecrm` which is the endpoint for the API Gateway for all SuiteCRM routes.
+
+> [!NOTE]
+> The base API endpoint used to proxy the user's requests to SuiteCRM is `http://localhost:8000/legacy/Api/V8/<params>` where `params` are the different modules allowed given by SuiteCRM's OpenAPI specifications.
+
+| **Route**       | **Method** | **Description**                                    | **Authorization** |
+| --------------- | ---------- | -------------------------------------------------- | ----------------- |
+| `/accounts`     | `POST`     | Create a new user account.                         | `Admin`           |
+| `/accounts`     | `GET`      | Retrieve a list of all user accounts.              | `Admin`           |
+| `/accounts/:id` | `GET`      | Retrieve details of a specific user account by ID. | `User` `Admin`    |
+| `/accounts`     | `PATCH`    | Update an existing user account.                   | `Admin`           |
+| `/accounts`     | `DELETE`   | Delete a user account.                             | `Admin`           |
+| `/oauth2/token` | `POST`     | Obtain an OAuth2 token for authentication.         | ❌                |
+
+### Notes
+
+- Ensure that the appropriate roles are assigned to users to access restricted routes.
+- Rate limiting is applied to prevent abuse of the API endpoints.
+
+## SnipeIt
+
+This document provides an overview of the API routes available in the SnipeIt module, including their descriptions and methods.
+
+The base URL is `http://localhost:3000/snipeit` which is the endpoint for the API Gateway for all SnipeIt routes.
+
+> [!NOTE]
+> The base API endpoint used to proxy the user's requests to SuiteCRM is `http://localhost:8001/api/v1/<params>` where `params` are the different resources allowed given by SnipeIt's OpenAPI specifications.
+
+| **Route**           | **Method** | **Description**                                    | **Authorization** |
+| ------------------- | ---------- | -------------------------------------------------- | ----------------- |
+| `/stocks`           | `GET`      | Retrieve a list of all stock items.                | `User` `Admin`    |
+| `/stocks/:id`       | `GET`      | Retrieve details of a specific stock item by ID.   | `User` `Admin`    |
+| `/stocks/:id`       | `PATCH`    | Update an existing stock item by ID.               | `Admin`           |
+| `/stocks/:id`       | `DELETE`   | Delete a stock item by ID.                         | `Admin`           |
+| `/stocks`           | `POST`     | Create a new stock item.                           | `Admin`           |
+| `/statuslabels`     | `GET`      | Retrieve a list of all status labels.              | `User` `Admin`    |
+| `/statuslabels/:id` | `GET`      | Retrieve details of a specific status label by ID. | `User` `Admin`    |
+| `/statuslabels/:id` | `PATCH`    | Update an existing status label by ID.             | `Admin`           |
+| `/statuslabels/:id` | `DELETE`   | Delete a status label by ID.                       | `Admin`           |
+| `/statuslabels`     | `POST`     | Create a new status label.                         | `Admin`           |
+| `/users`            | `GET`      | Retrieve a list of all users.                      | `Admin`           |
+| `/users/:id`        | `GET`      | Retrieve details of a specific user by ID.         | `User` `Admin`    |
+| `/users`            | `POST`     | Create a new user account.                         | `Admin`           |
+| `/users/:id`        | `PATCH`    | Update an existing user account by ID.             | `Admin`           |
+| `/users/:id`        | `DELETE`   | Delete a user account by ID.                       | `Admin`           |
+
+### Notes
+
+- Ensures that the appropriate roles are assigned to users to access restricted routes.
+- Rate limiting is applied to prevent abuse of the API endpoints.
+
+## HelpDesk
 
 # SuiteCRM
 
