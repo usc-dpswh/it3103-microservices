@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Hardware Controllers
 export const HardwareControllers = {
   getAllHardware: async (req, res) => {
     try {
@@ -170,7 +169,6 @@ export const HardwareControllers = {
   },
 };
 
-// Status Label Controllers
 export const StatusLabelControllers = {
   getAllStatusLabels: async (req, res) => {
     try {
