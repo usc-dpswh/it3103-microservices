@@ -10,4 +10,7 @@ app.use(trimTrailingSlash());
 
 app.route("/tickets", ticket);
 
-export default app;
+export default {
+  port: 3001,
+  fetch: app.fetch,
+};

@@ -121,7 +121,6 @@ services:
       - "3001:3001"
     build:
       context: "./helpdesk"
-      target: runner
     environment:
       CRM_API_URL: ${SUITECRM_API_URL}
       CRM_API_KEY: ${SUITECRM_API_KEY}

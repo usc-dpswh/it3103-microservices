@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { router as SuiteRoutes } from "./routes/SuiteRoutes.js";
 import { router as SnipeRoutes } from "./routes/SnipeRoutes.js";
 import { router as AuthRoutes } from "./routes/AuthenticationRoutes.js";
+import { router as HelpRoutes } from "./routes/HelpRoutes.js"; // Import help routes
 import dotenv from "dotenv";
 
 dotenv.config({ path: "../.env" });
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 app.use("/suitecrm", SuiteRoutes);
 app.use("/snipeit", SnipeRoutes);
 app.use("/auth", AuthRoutes);
+app.use("/helpdesk", HelpRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
