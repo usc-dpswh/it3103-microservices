@@ -1,5 +1,5 @@
 import express from "express";
-import * as SuiteControllers from "../controllers/SuiteControllers.js";
+import { SuiteControllers } from "../controllers/SuiteControllers.js";
 import { authenticateToken } from "../middlewares/authMiddleware.js";
 
 export const router = express.Router();
