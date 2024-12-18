@@ -16,7 +16,17 @@ router.get(
   authenticateToken,
   HardwareControllers.getHardwareById
 );
-
+router.patch(
+  "/hardware/:id",
+  authenticateToken,
+  HardwareControllers.updateHardware
+);
+router.delete(
+  "/hardware/:id",
+  authenticateToken,
+  HardwareControllers.
+);
+router.post("/hardware", authenticateToken, HardwareControllers.createHardware);
 // People Routes
 
 // Status Label Routes
