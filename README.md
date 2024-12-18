@@ -124,6 +124,22 @@ The base URL is `http://localhost:3000/snipeit` which is the endpoint for the AP
 
 ## HelpDesk
 
+> [!NOTE]
+> The base API endpoint used to proxy the user's requests to the HelpDesk is `http://localhost:3001/tickets`.
+
+| **Route**      | **Method** | **Description**                              | **Authorization** |
+| -------------- | ---------- | -------------------------------------------- | ----------------- |
+| `/tickets`     | `GET`      | Retrieve a list of all tickets.              | `User`, `Admin`   |
+| `/tickets`     | `POST`     | Create a new ticket.                         | `User`, `Admin`   |
+| `/tickets/:id` | `GET`      | Retrieve details of a specific ticket by ID. | `User`, `Admin`   |
+| `/tickets/:id` | `PUT`      | Update an existing ticket by ID.             | `User`, `Admin`   |
+| `/tickets/:id` | `DELETE`   | Delete a ticket by ID.                       | `Admin`           |
+
+### Notes
+
+- Ensures that the appropriate roles are assigned to users to access restricted routes.
+- Rate limiting is applied to prevent abuse of the API endpoints.
+
 # SuiteCRM
 
 ## Standalone Setup
