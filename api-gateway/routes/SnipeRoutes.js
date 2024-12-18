@@ -18,35 +18,35 @@ router.get(
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin", "user"),
-  StockControllers.getAllStocks
+  StockControllers.getAllStocks,
 );
 router.get(
   "/stocks/:id",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin", "user"),
-  StockControllers.getStocksById
+  StockControllers.getStocksById,
 );
 router.patch(
   "/stocks/:id",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  StockControllers.updateItemById
+  StockControllers.updateItemById,
 );
 router.delete(
   "/stocks/:id",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  StockControllers.deleteItemById
+  StockControllers.deleteItemById,
 );
 router.post(
   "/stocks",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  StockControllers.createItem
+  StockControllers.createItem,
 );
 
 // Status Label Routes
@@ -55,35 +55,35 @@ router.get(
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin", "user"),
-  StatusLabelControllers.getAllStatusLabels
+  StatusLabelControllers.getAllStatusLabels,
 );
 router.get(
   "/statuslabels/:id",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin", "user"),
-  StatusLabelControllers.getStatusLabelById
+  StatusLabelControllers.getStatusLabelById,
 );
 router.patch(
   "/statuslabels/:id",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  StatusLabelControllers.updateStatusLabel
+  StatusLabelControllers.updateStatusLabel,
 );
 router.delete(
   "/statuslabels/:id",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  StatusLabelControllers.deleteStatusLabelById
+  StatusLabelControllers.deleteStatusLabelById,
 );
 router.post(
   "/statuslabels",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  StatusLabelControllers.createStatusLabel
+  StatusLabelControllers.createStatusLabel,
 );
 
 // Users Routers
@@ -92,33 +92,33 @@ router.get(
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  UserControllers.getAllUsers
+  UserControllers.getAllUsers,
 );
 router.get(
   "/users/:id",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin", "user"),
-  UserControllers.getUserById
+  UserControllers.getUserById,
 );
 router.post(
   "/users",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  UserControllers.createUser
+  UserControllers.createUser,
 );
 router.patch(
   "/users/:id",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  UserControllers.updateUserById
+  UserControllers.updateUserById,
 );
 router.delete(
   "/users/:id",
   rateLimitMiddleware,
   authenticateToken,
   authorizeRoles("admin"),
-  UserControllers.deleteUserById
+  UserControllers.deleteUserById,
 );

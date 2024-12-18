@@ -1,3 +1,5 @@
+// SnipeControllers.js
+
 import axios from "axios";
 
 export const StockControllers = {
@@ -11,13 +13,13 @@ export const StockControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Error fetching data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error fetching hardware data");
     }
@@ -42,13 +44,13 @@ export const StockControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "error fetching data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error fetching hardware data");
     }
@@ -79,14 +81,14 @@ export const StockControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       res.json(response.data);
     } catch (error) {
       console.error(
         "Something went wrong!",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error in creating hardware.");
     }
@@ -124,14 +126,14 @@ export const StockControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       res.json(response.data);
     } catch (error) {
       console.error(
         "Something went wrong!",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error in updating hardware.");
     }
@@ -156,13 +158,13 @@ export const StockControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Error fetching data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error in deleting hardware.");
     }
@@ -180,13 +182,13 @@ export const StatusLabelControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Error fetching data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error fetching data");
     }
@@ -200,7 +202,7 @@ export const StatusLabelControllers = {
       return res
         .status(400)
         .send(
-          "error: 'statusLabelId' parameter is required and cannot be empty."
+          "error: 'statusLabelId' parameter is required and cannot be empty.",
         );
     }
 
@@ -213,13 +215,13 @@ export const StatusLabelControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "error fetching data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error in getting status label with inputted id.");
     }
@@ -247,13 +249,13 @@ export const StatusLabelControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Something went wrong!",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error in updating status label.");
     }
@@ -267,7 +269,7 @@ export const StatusLabelControllers = {
       return res
         .status(400)
         .send(
-          "error: 'statusLabelId' parameter is required and cannot be empty."
+          "error: 'statusLabelId' parameter is required and cannot be empty.",
         );
     }
 
@@ -280,13 +282,13 @@ export const StatusLabelControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "error fetching data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error in deleting status label.");
     }
@@ -314,7 +316,7 @@ export const StatusLabelControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       // Return the created status label details in the response.
@@ -322,7 +324,7 @@ export const StatusLabelControllers = {
     } catch (error) {
       console.error(
         "Something went wrong!",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error in creating status label.");
     }
@@ -343,7 +345,7 @@ export const UserControllers = {
     } catch (error) {
       console.error(
         "Error fetching data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error fetching data");
     }
@@ -368,13 +370,13 @@ export const UserControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Error fetching data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error fetching user/s.");
     }
@@ -419,14 +421,14 @@ export const UserControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       res.json(response.data);
     } catch (error) {
       console.error(
         "Something went wrong!",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error in creating status label.");
     }
@@ -469,14 +471,14 @@ export const UserControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       res.json(response.data);
     } catch (error) {
       console.error(
         "Something went wrong!",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error in updating hardware.");
     }
@@ -501,13 +503,13 @@ export const UserControllers = {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       res.json(response.data);
     } catch (error) {
       console.error(
         "Error deleting data:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
       res.status(500).send("Error in deleting user.");
     }
