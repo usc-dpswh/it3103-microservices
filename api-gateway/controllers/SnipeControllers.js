@@ -221,7 +221,7 @@ export const StatusLabelControllers = {
         "error fetching data:",
         error.response ? error.response.data : error.message
       );
-      res.status(500).send("error fetching data");
+      res.status(500).send("Error in getting status label with inputted id.");
     }
   },
 
@@ -288,7 +288,7 @@ export const StatusLabelControllers = {
         "error fetching data:",
         error.response ? error.response.data : error.message
       );
-      res.status(500).send("error fetching data");
+      res.status(500).send("Error in deleting status label.");
     }
   },
 
@@ -429,6 +429,87 @@ export const UserControllers = {
         error.response ? error.response.data : error.message
       );
       res.status(500).send("Error in creating status label.");
+    }
+  },
+
+  updateUserById: async (req, res) => {
+    const request = req.body;
+    const userId = req.params.id;
+
+    const requestBody = {
+      username: request?.username,
+      password: request?.password,
+      email: request?.email,
+      permissions: request?.permissions,
+      activated: request?.activated,
+      phone: request?.phone,
+      jobtitle: request?.jobtitle,
+      manager_id: request?.manager_id,
+      employee_num: request?.employee_num,
+      notes: request?.notes,
+      company_id: request?.company_id,
+      two_factor_enrolled: request?.two_factor_enrolled,
+      two_factor_optin: request?.two_factor_optin,
+      department_id: request?.department_id,
+      location_id: request?.location_id,
+      remote: request?.remote,
+      groups: request?.groups,
+      vip: request?.vip,
+      start_date: request?.start_date,
+      end_date: request?.end_date,
+    };
+
+    try {
+      const response = await axios.patch(
+        `${process.env.SNIPEIT_API_URL}/users/${userId}`,
+        requestBody,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.SNIPEIT_API_KEY}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      res.json(response.data);
+    } catch (error) {
+      console.error(
+        "Something went wrong!",
+        error.response ? error.response.data : error.message
+      );
+      res.status(500).send("Error in updating hardware.");
+    }
+  },
+
+  deleteUserById: async (req, res) => {
+    const userId = req.params.id;
+
+    if (!userId || userId.trim() === "") {
+      console.error("passed parameter 'userId' is not a valid value.");
+      return res
+        .status(400)
+        .send("error: 'userId' parameter is required and cannot be empty.");
+    }
+
+    try {
+      const response = await axios.delete(
+        `${process.env.SNIPEIT_API_URL}/users/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.SNIPEIT_API_KEY}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      res.json(response.data);
+    } catch (error) {
+      console.error(
+        "Error deleting data:",
+        error.response ? error.response.data : error.message
+      );
+      res.status(500).send("Error in deleting user.");
     }
   },
 };

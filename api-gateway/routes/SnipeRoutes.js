@@ -11,7 +11,7 @@ import { authorizeRoles } from "../middlewares/roleMiddleware.js"; // Import the
 
 export const router = express.Router();
 
-// Hardware Routes
+// Stocks Routes
 router.get(
   "/hardware",
   authenticateToken,
@@ -94,3 +94,16 @@ router.post(
   authorizeRoles("admin"),
   UserControllers.createUser
 );
+router.patch(
+  "/users/:id",
+  authenticateToken,
+  authorizeRoles("admin"),
+  UserControllers.updateUserById
+);
+router.delete(
+  "/users/:id",
+  authenticateToken,
+  authorizeRoles("admin"),
+  UserControllers.deleteUserById
+);
+// Sales Routes (denoted by Quotes)
