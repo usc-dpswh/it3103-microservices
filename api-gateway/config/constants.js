@@ -1,10 +1,9 @@
 // Keys
-export const CRM_API_KEY =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJkN2Y1MTFiYi0zOTg2LTU3NmMtODRkYy02NzYwMmQ4Mzk5M2QiLCJqdGkiOiJlOGI5Mjc2NDc4MDczZDMwNzYwN2ZlMGI4ZTM5NzM2NTEwNDUyYzhkYzI2NzQxMTViNDY1MTRiYmY3OTQ2NjliNGQ2MDlkNTVhOTcxMTg2NSIsImlhdCI6MTczNDQ2NjU1OS4xMzg1NzIsIm5iZiI6MTczNDQ2NjU1OS4xMzg1NzIsImV4cCI6MTczNDQ3MDE1OS4xMzAzMjMsInN1YiI6IiIsInNjb3BlcyI6W119.eoDmWlOi2Vh_7dBNVtGLaak72aLhGbEs07OnCzm0rjC-aZeqg5xfjISgoxnxiRMOyYg7WFILD5gD_L1f9pLduy42zB-Bit6ZxuUe-Vn5KM2gwAlGiQNACVbA1Vun3degQXCUyFRFDrII4jNRNPrmea75k-kyxgV7_Ua5OLsT-ElP8czEPZ7bEOm0-jP7_SuSSQ0uKTVcn1MYDzuhkdx_OLwEPgTmIbzcEft2MA76fFJ5Mz-x-9VVwyPSE99vLElqBg5qsRCps8EzS8AQS-DIBPbHo5E9RPVh_r5daO85PRrJWpmjjv_irlCn-ta40tPFd6Ix_NZd_IbOfSRZitl5rA";
-export const IMS_API_KEY = "";
-export const HELPDESK_API_KEY = "";
+export const CRM_API_KEY = process.env.SUITECRM_API_KEY;
+export const IMS_API_KEY = process.env.SNIPEIT_API_KEY;
+export const HELPDESK_API_KEY = process.env.HELPDESK_API_KEY;
 
 // Base URLS
 export const CRM_URL = "http://localhost:8000/legacy/Api/V8";
-export const IMS_URL = "";
+export const IMS_URL = "http://localhost:8001/api/v1/";
 export const HELPDESK_URL = "";
