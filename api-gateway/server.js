@@ -6,7 +6,7 @@ import { router as SnipeRoutes } from "./routes/SnipeRoutes.js";
 import { router as AuthRoutes } from "./routes/AuthenticationRoutes.js";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: "../.env" });
 
 const app = express();
 const PORT = process.env.GATEWAY_PORT || 3000;

@@ -35,11 +35,14 @@ export const getBearerToken = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   try {
-    const response = await axios.get(`${Config.CRM_URL}/module/Accounts`, {
-      headers: {
-        Authorization: `Bearer ${Config.CRM_API_KEY}`,
-      },
-    });
+    const response = await axios.get(
+      `${process.env.SUITECRM_API_URL}/module/Accounts`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.SUITECRM_API_KEY}`,
+        },
+      }
+    );
     res.json(response.data);
   } catch (error) {
     console.error(
@@ -62,10 +65,10 @@ export const getUserById = async (req, res) => {
 
   try {
     const response = await axios.get(
-      `${Config.CRM_URL}/module/Accounts/${userid}`,
+      `${process.env.SUITECRM_API_URL}/module/Accounts/${userid}`,
       {
         headers: {
-          Authorization: `Bearer ${Config.CRM_API_KEY}`,
+          Authorization: `Bearer ${process.env.SUITECRM_API_KEY}`,
         },
       }
     );
@@ -92,11 +95,15 @@ export const createUser = async (req, res) => {
   };
 
   try {
-    const response = await axios.post(`${Config.CRM_URL}/module`, requestBody, {
-      headers: {
-        Authorization: `Bearer ${Config.CRM_API_KEY}`,
-      },
-    });
+    const response = await axios.post(
+      `${process.env.SUITECRM_API_URL}/module`,
+      requestBody,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.SUITECRM_API_KEY}`,
+        },
+      }
+    );
     res.json(response.data);
   } catch (error) {
     console.error(
@@ -119,10 +126,10 @@ export const deleteUser = async (req, res) => {
 
   try {
     const response = await axios.delete(
-      `${Config.CRM_URL}/module/Accounts/${userid}`,
+      `${process.env.SUITECRM_API_URL}/module/Accounts/${userid}`,
       {
         headers: {
-          Authorization: `Bearer ${Config.CRM_API_KEY}`,
+          Authorization: `Bearer ${process.env.SUITECRM_API_KEY}`,
         },
       }
     );
@@ -151,11 +158,11 @@ export const updateUser = async (req, res) => {
 
   try {
     const response = await axios.patch(
-      `${Config.CRM_URL}/module`,
+      `${process.env.SUITECRM_API_URL}/module`,
       requestBody,
       {
         headers: {
-          Authorization: `Bearer ${Config.CRM_API_KEY}`,
+          Authorization: `Bearer ${process.env.SUITECRM_API_KEY}`,
         },
       }
     );
