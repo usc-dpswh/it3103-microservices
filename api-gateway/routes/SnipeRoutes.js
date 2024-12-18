@@ -2,8 +2,9 @@
 
 import express from "express";
 import {
-  HardwareControllers,
+  StockControllers,
   StatusLabelControllers,
+  UserControllers,
 } from "../controllers/SnipeControllers.js";
 import { authenticateToken } from "../middlewares/authMiddleware.js";
 import { authorizeRoles } from "../middlewares/roleMiddleware.js"; // Import the role middleware
@@ -15,31 +16,31 @@ router.get(
   "/hardware",
   authenticateToken,
   authorizeRoles("admin", "user"),
-  HardwareControllers.getAllHardware
+  StockControllers.getAllStocks
 );
 router.get(
   "/hardware/:id",
   authenticateToken,
   authorizeRoles("admin", "user"),
-  HardwareControllers.getHardwareById
+  StockControllers.getStocksById
 );
 router.patch(
   "/hardware/:id",
   authenticateToken,
   authorizeRoles("admin"),
-  HardwareControllers.updateHardware
+  StockControllers.updateItemById
 );
 router.delete(
   "/hardware/:id",
   authenticateToken,
   authorizeRoles("admin"),
-  HardwareControllers.deleteHardwareById
+  StockControllers.deleteItemById
 );
 router.post(
   "/hardware",
   authenticateToken,
   authorizeRoles("admin"),
-  HardwareControllers.createHardware
+  StockControllers.createItem
 );
 
 // Status Label Routes
@@ -72,4 +73,24 @@ router.post(
   authenticateToken,
   authorizeRoles("admin"),
   StatusLabelControllers.createStatusLabel
+);
+
+// Users Routers
+router.get(
+  "/users",
+  authenticateToken,
+  authorizeRoles("admin"),
+  UserControllers.getAllUsers
+);
+router.get(
+  "/users/:id",
+  authenticateToken,
+  authorizeRoles("admin", "user"),
+  UserControllers.getUserById
+);
+router.post(
+  "/users",
+  authenticateToken,
+  authorizeRoles("admin"),
+  UserControllers.createUser
 );

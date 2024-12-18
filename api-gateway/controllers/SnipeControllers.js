@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const HardwareControllers = {
-  getAllHardware: async (req, res) => {
+export const StockControllers = {
+  getAllStocks: async (req, res) => {
     try {
       const response = await axios.get(
         `${process.env.SNIPEIT_API_URL}/hardware`,
@@ -23,7 +23,7 @@ export const HardwareControllers = {
     }
   },
 
-  getHardwareById: async (req, res) => {
+  getStocksById: async (req, res) => {
     const hardwareid = req.params.id;
 
     if (!hardwareid || hardwareid.trim() === "") {
@@ -54,7 +54,7 @@ export const HardwareControllers = {
     }
   },
 
-  createHardware: async (req, res) => {
+  createItem: async (req, res) => {
     const request = req.body;
 
     const requestBody = {
@@ -92,7 +92,7 @@ export const HardwareControllers = {
     }
   },
 
-  updateHardware: async (req, res) => {
+  updateItemById: async (req, res) => {
     const request = req.body;
     const hardwareId = req.params.id;
 
@@ -137,7 +137,7 @@ export const HardwareControllers = {
     }
   },
 
-  deleteHardwareById: async (req, res) => {
+  deleteItemById: async (req, res) => {
     const hardwareId = req.params.id;
 
     if (!hardwareId || hardwareId.trim() === "") {
@@ -318,6 +318,110 @@ export const StatusLabelControllers = {
       );
 
       // Return the created status label details in the response.
+      res.json(response.data);
+    } catch (error) {
+      console.error(
+        "Something went wrong!",
+        error.response ? error.response.data : error.message
+      );
+      res.status(500).send("Error in creating status label.");
+    }
+  },
+};
+
+export const UserControllers = {
+  getAllUsers: async (req, res) => {
+    try {
+      const response = await axios.get(`${process.env.SNIPEIT_API_URL}/users`, {
+        headers: {
+          Authorization: `Bearer ${process.env.SNIPEIT_API_KEY}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      res.json(response.data);
+    } catch (error) {
+      console.error(
+        "Error fetching data:",
+        error.response ? error.response.data : error.message
+      );
+      res.status(500).send("Error fetching data");
+    }
+  },
+
+  getUserById: async (req, res) => {
+    const userId = req.params.id;
+
+    if (!userId || userId.trim() === "") {
+      console.error("passed parameter 'userId' is not a valid value.");
+      return res
+        .status(400)
+        .send("error: 'userId' parameter is required and cannot be empty.");
+    }
+
+    try {
+      const response = await axios.get(
+        `${process.env.SNIPEIT_API_URL}/users/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.SNIPEIT_API_KEY}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      res.json(response.data);
+    } catch (error) {
+      console.error(
+        "Error fetching data:",
+        error.response ? error.response.data : error.message
+      );
+      res.status(500).send("Error fetching user/s.");
+    }
+  },
+
+  createUser: async (req, res) => {
+    const request = req.body;
+
+    const requestBody = {
+      first_name: request?.first_name,
+      last_name: request?.last_name,
+      username: request?.username,
+      password: request?.password,
+      password_confirmation: request?.password_confirmation,
+      email: request?.email,
+      permissions: request?.permissions,
+      activated: request?.activated,
+      phone: request?.phone,
+      jobtitle: request?.jobtitle,
+      manager_id: request?.manager_id,
+      employee_num: request?.employee_num,
+      notes: request?.notes,
+      company_id: request?.company_id,
+      two_factor_enrolled: request?.two_factor_enrolled,
+      two_factor_optin: request?.two_factor_optin,
+      department_id: request?.department_id,
+      location_id: request?.location_id,
+      remote: request?.remote,
+      groups: request?.groups,
+      vip: request?.vip,
+      start_date: request?.start_date,
+      end_date: request?.end_date,
+    };
+
+    try {
+      const response = await axios.post(
+        `${process.env.SNIPEIT_API_URL}/users`,
+        requestBody,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.SNIPEIT_API_KEY}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       res.json(response.data);
     } catch (error) {
       console.error(
